@@ -38,7 +38,7 @@ export class BooksAPI {
     return fetch(url, options).then(res => res.json());
   }
 
-  resetBooks(id, book) {
+  resetBook(id, book) {
     const url = `${this.BASE_URL}${this.END_POINT}/${id}`;
 
     const options = {
@@ -52,15 +52,11 @@ export class BooksAPI {
     return fetch(url, options).then(res => res.json());
   }
 
-  removeBooks(id, book) {
+  deleteBook(id) {
     const url = `${this.BASE_URL}${this.END_POINT}/${id}`;
 
     const options = {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(book),
     };
 
     return fetch(url, options).then(res => res.json());

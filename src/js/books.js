@@ -62,12 +62,51 @@ function onCreateFormSubmit(e) {
 
 function onResetFormSubmit(e) {
   e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const book = {};
+
+  formData.forEach((value, key) => {
+    key = key.slice(4).toLocaleLowerCase();
+    book[key] = value;
+  });
+
+  booksAPI.resetBooks(book.id, book).then(newBook => {
+    const oldBookCard = document.querySelector(`[data-id="${book.id}"]`);
+    const markup = templateBook(newBook);
+    oldBookCard.insertAdjacentHTML('afterend', markup);
+    oldBookCard.remove();
+  });
+
+  e.target.reset();
 }
 
 function onUpdateFormSubmit(e) {
   e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const book = {};
+
+  formData.forEach((value, key) => {
+    key = key.slice(4).toLocaleLowerCase();
+    if (value) book[key] = value;
+  });
+
+  booksAPI.updateBook(book.id, book).then(newBook => {
+    const oldBookCard = document.querySelector(`[data-id="${book.id}"]`);
+    const markup = templateBook(newBook);
+    oldBookCard.insertAdjacentHTML('afterend', markup);
+    oldBookCard.remove();
+  });
+
+  e.target.reset();
 }
 
 function onDeleteteFormSubmit(e) {
   e.preventDefault();
+  const id = e.target.elements.bookId.value;
+  booksAPI.deleteBook(id).then(() => {
+    const oldBookCard = document.querySelector(`[data-id="${id}"]`);
+    oldBookCard.remove();
+  });
 }
