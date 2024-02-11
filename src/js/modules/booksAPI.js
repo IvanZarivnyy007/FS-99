@@ -2,7 +2,7 @@ export class BooksAPI {
   constructor() {
     this.BASE_URL = 'http://localhost:3000';
     this.END_POINT = '/books';
-    this.API_KEY = '123123';
+    this.API_KEY = '1234567890';
   }
 
   getBooks() {
@@ -10,7 +10,7 @@ export class BooksAPI {
     return fetch(url).then(res => res.json());
   }
 
-  createBook(data) {
+  createBooks(book) {
     const url = this.BASE_URL + this.END_POINT;
 
     const options = {
@@ -18,13 +18,13 @@ export class BooksAPI {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(book),
     };
 
     return fetch(url, options).then(res => res.json());
   }
 
-  updateBook(id, book) {
+  updateBooks(id, book) {
     const url = `${this.BASE_URL}${this.END_POINT}/${id}`;
 
     const options = {
@@ -38,7 +38,7 @@ export class BooksAPI {
     return fetch(url, options).then(res => res.json());
   }
 
-  resetBook(id, book) {
+  resetBooks(id, book) {
     const url = `${this.BASE_URL}${this.END_POINT}/${id}`;
 
     const options = {
@@ -52,15 +52,17 @@ export class BooksAPI {
     return fetch(url, options).then(res => res.json());
   }
 
-  deleteBook(id) {
+  removeBooks(id, book) {
     const url = `${this.BASE_URL}${this.END_POINT}/${id}`;
 
     const options = {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(book),
     };
 
     return fetch(url, options).then(res => res.json());
   }
 }
-
-/// ===========================
